@@ -1,18 +1,23 @@
 #!/bin/bash
 
-REMOTE_REPO="to-do"
-REPO_NAME="to-do"
+REMOTE_DIR="/etc/puppetlabs"
+LOCAL_CODE="/vagrant/src/code"
+
+
 
 function main() {
-    cd /tmp/
-    
-    git clone $REMOTE_REPO
+    vagrant rsync master
 
-    cd $REPO_NAME
+    vagrant ssh master -c "sudo rm -r $REMOTE_DIR/code"
 
-    cp -rf src/code /etc/puppetlabs/code
+    vagrant ssh master -c "sudo cp -r $LOCAL_CODE $REMOTE_DIR/"
 
-    ssh root@client 'puppet agent -t'
+    #vagrant ssh master -c "sudo /opt/puppetlabs/bin/puppet agent -t"
+
+    vagrant ssh client -c "sudo /opt/puppetlabs/bin/puppet agent -t"
 }
 
 main
+
+
+# don't forget to chmod +x

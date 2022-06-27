@@ -44,8 +44,8 @@ function stage_one() {
 }
 
 function setup_master() {
-    echo '192.168.2.101     puppet' >> /etc/hosts
-    echo '192.168.2.101     master' >> /etc/hosts
+    echo '127.0.0.1     puppet' >> /etc/hosts
+    echo '192.168.2.100     master' >> /etc/hosts
     echo '192.168.2.101     client' >> /etc/hosts
 
     sed -i.bkp 's/-Xms2g -Xmx2g/-Xms1g -Xmx1g/g' /etc/default/puppetserver
